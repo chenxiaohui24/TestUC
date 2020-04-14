@@ -1,10 +1,25 @@
-import os,csv,yaml,xlrd
+import os,csv,yaml,xlrd,time
+from selenium.webdriver import Remote
 
 basepath = os.path.dirname(__file__)
 txtpath = os.path.join(basepath, 'testdata', 'txt.txt')
 csvpath = os.path.join(basepath, 'testdata', 'csv.csv')
 xlsxpath = os.path.join(basepath, 'testdata', 'xlsx.xlsx')
 yamlpath = os.path.join(basepath, 'testdata', 'yaml.yaml')
+
+
+def test_baidu(host, browser):
+    print('当前浏览器是%s,启动时间是%s' % (browser, time.ctime()))
+    dc = {'browserName': browser}
+    driver = Remote(command_executor=host,
+                    desired_capabilities=dc)
+    driver.get('https://www.baidu.com/')
+    driver.find_element_by_id('kw').send_keys('selenium')
+    driver.find_element_by_id('su').click()
+    time.sleep(3)
+    driver.close()
+    print('%s结束时间是%s' % (browser, time.ctime()))
+
 
 class Readfile():
     def __init__(self,*args):
@@ -47,6 +62,7 @@ class Readfile():
                 l.append(d)
             j += 1
         return l
+
 
 if __name__ == '__main__':
     print(Readfile(txtpath).readtxt())
