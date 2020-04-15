@@ -5,6 +5,5 @@ class TESTPRINT(unittest.TestCase):
         print('Hello, World!')
 
 
-if __name__=='__mian__':
-    # unittest.main()
-    TESTPRINT().testprint()
+if __name__=='__main__':
+    unittest.main()
